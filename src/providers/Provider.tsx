@@ -1,5 +1,5 @@
-import ReactQueryProvider from "./ReactQueryProvider";
-import ReactRouterProvider from "./ReactRouterProvider";
+import ReactQueryProvider from "@providers/ReactQueryProvider";
+import ReactRouterProvider from "@/providers/ReactRouterProvider";
 
 const Provider = () => {
   return (
