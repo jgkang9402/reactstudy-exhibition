@@ -21,6 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      "@hooks/*": ["src/hooks/*"],
+      "@types/*": ["src/types/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@providers/*": ["src/providers/*"],

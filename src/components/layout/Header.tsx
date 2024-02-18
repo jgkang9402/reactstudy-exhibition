@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  console.log("Header");
+  // console.log("Header");
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);

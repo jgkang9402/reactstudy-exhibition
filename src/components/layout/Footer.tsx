@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -9,14 +9,14 @@ const Footer = () => {
     <footer className="fixed bottom-0 w-96 bg-white h-20 border-t border-primary">
       <ul className="flex justify-evenly">
         <li>
-          <button onClick={() => handleRoute("/")}>
+          <Link to={"/"}>
             <span>전시회</span>
-          </button>
+          </Link>
         </li>
         <li>
-          <button onClick={() => handleRoute("/like")}>
+          <Link to={"/like"}>
             <span>찜목록</span>
-          </button>
+          </Link>
         </li>
       </ul>
     </footer>
