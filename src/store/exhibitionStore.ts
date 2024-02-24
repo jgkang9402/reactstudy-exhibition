@@ -1,5 +1,4 @@
 import { ExhibitionType } from "@/types/exhibition.type";
-// import { ExhibitionType } from "@types/exhibition.type";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { persist } from "zustand/middleware";
@@ -14,42 +13,43 @@ interface ExhibitionPersistedState {
 }
 
 export const useExhibitionStore = create(
-  // persist<ExhibitionStoreType>(
-  persist<ExhibitionStoreType, [], [], ExhibitionPersistedState>(
-    (set) => ({
-      likeList: [],
-      likeList2: [], // persist테스트용 스테이트
-      handleLike: (exhibition) =>
-        set((state) => {
-          console.log(state);
+  devtools(
+    persist<ExhibitionStoreType, [], [], ExhibitionPersistedState>(
+      (set) => ({
+        likeList: [],
+        likeList2: [], // persist테스트용 스테이트
+        handleLike: (exhibition) =>
+          set((state) => {
+            console.log(state);
 
-          const isLiked = state.likeList.some(
-            (item) => item.contentid === exhibition.contentid
-          );
-          const isLiked2 = state.likeList2.some(
-            (item) => item.contentid === exhibition.contentid
-          );
-          if (isLiked || isLiked2) {
-            return {
-              likeList: state.likeList.filter(
-                (item) => item.contentid !== exhibition.contentid
-              ),
-              likeList2: state.likeList2.filter(
-                (item) => item.contentid !== exhibition.contentid
-              ),
-            };
-          } else {
-            return {
-              likeList: [...state.likeList, exhibition],
-              likeList2: [...state.likeList, exhibition],
-            };
-          }
-        }),
-    }),
-    {
-      name: "exhibitionLikeList",
-      partialize: (state) => ({ likeList: state.likeList }),
-    }
+            const isLiked = state.likeList.some(
+              (item) => item.contentid === exhibition.contentid
+            );
+            const isLiked2 = state.likeList2.some(
+              (item) => item.contentid === exhibition.contentid
+            );
+            if (isLiked || isLiked2) {
+              return {
+                likeList: state.likeList.filter(
+                  (item) => item.contentid !== exhibition.contentid
+                ),
+                likeList2: state.likeList2.filter(
+                  (item) => item.contentid !== exhibition.contentid
+                ),
+              };
+            } else {
+              return {
+                likeList: [...state.likeList, exhibition],
+                likeList2: [...state.likeList, exhibition],
+              };
+            }
+          }),
+      }),
+      {
+        name: "exhibitionLikeList",
+        partialize: (state) => ({ likeList: state.likeList }),
+      }
+    )
   )
 );
 
