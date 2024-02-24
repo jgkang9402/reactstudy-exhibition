@@ -2,23 +2,36 @@ import useGetExhhibition from "@hooks/queries/useGetExhhibition";
 import ExhibitionCard from "@components/common/ExhibitionCard";
 import { useState } from "react";
 import { ExhibitionType } from "@/types/exhibition.type";
+import Spinner from "@components/common/Spinner";
+import useIntersectionObserver from "@hooks/useIntersectionObserver";
+import useGetInfinityExhibition from "@hooks/queries/useGetInfinityExhibition";
 // import { ExhibitionType } from "@types/exhibition.type";
 
 const ExgibitionWrapper = () => {
   const [code, setCode] = useState(1); // 31경기도,32강원도
-  const [page, setPage] = useState(1);
 
-  const { exhibitionList, totalCount, isLoading } = useGetExhhibition({
-    code: code,
-    page: page,
-  });
+  const { targetRef } = useIntersectionObserver(handleVisibility);
+  const {
+    exhibitionList,
+    isLoading,
+    // error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetInfinityExhibition(code);
+  function handleVisibility(isVisible: boolean) {
+    if (isVisible && hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }
+  // const { exhibitionList, totalCount, isLoading } = useGetExhhibition({
+  //   code: code,
+  //   page: page,
+  // });
 
   if (isLoading) {
-    return <div>loding~~~~...</div>;
+    return <Spinner />;
   }
-  // if (isLoading) <div>loding...</div>;
   return (
-    <div>
+    <div className="pb-12">
       <ul className="flex flex-col gap-2">
         {exhibitionList?.map((exhibition: ExhibitionType) => {
           return (
@@ -29,6 +42,7 @@ const ExgibitionWrapper = () => {
           );
         })}
       </ul>
+      <div ref={targetRef}>{isFetchingNextPage && <Spinner />}</div>
     </div>
   );
 };
