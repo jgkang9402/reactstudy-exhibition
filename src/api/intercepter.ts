@@ -3,7 +3,7 @@ import { AxiosInstance } from "axios";
 const setupInterceptors = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     (config) => {
-      console.log("@@", config);
+      // console.log("@@", config);
 
       config.url = config.url?.includes("serviceKey")
         ? config.url
