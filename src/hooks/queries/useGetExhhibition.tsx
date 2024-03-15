@@ -26,12 +26,6 @@ const useGetExhhibition = (payload: PayloadProps) => {
     staleTime: 50000,
   });
   // const { data, isLoading, error } = useInfiniteQuery();
-  console.log({
-    exhibitionList: data?.items.item,
-    totalCount: data?.totalCount,
-    isLoading,
-    error,
-  });
 
   return {
     exhibitionList: data?.items.item,

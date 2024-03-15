@@ -1,10 +1,6 @@
 import axiosInstance from "@/api/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-// interface PayloadProps {
-//   code: number;
-// }
-
 const fetchGetExhibitions = async (page: number, code: number) => {
   const response = await axiosInstance
     .get(
@@ -29,8 +25,8 @@ const useGetInfinityExhibition = (code: number) => {
     queryKey: ["travelList", code],
     queryFn: ({ pageParam = 1 }) => fetchGetExhibitions(pageParam, code),
     getNextPageParam: (lastPage, allPages) => {
-      console.log("###", lastPage);
-      console.log("@@@@", allPages);
+      // console.log("### ", lastPage);
+      // console.log("@@@@", allPages);
 
       const nextPage = allPages.length + 1;
       const totalpages = Math.ceil(lastPage.totalCount / lastPage.numOfRows);

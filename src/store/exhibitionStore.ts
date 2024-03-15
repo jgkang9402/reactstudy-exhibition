@@ -1,57 +1,85 @@
 import { ExhibitionType } from "@/types/exhibition.type";
-import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { persist } from "zustand/middleware";
 
-interface ExhibitionStoreType {
+export interface ExhibitionStoreType {
   likeList: ExhibitionType[];
-  likeList2: ExhibitionType[];
   handleLike: (ExhibitionType: ExhibitionType) => void;
 }
 interface ExhibitionPersistedState {
   likeList: ExhibitionType[];
 }
 
-export const useExhibitionStore = create(
-  devtools(
-    persist<ExhibitionStoreType, [], [], ExhibitionPersistedState>(
-      (set) => ({
-        likeList: [],
-        likeList2: [], // persist테스트용 스테이트
-        handleLike: (exhibition) =>
-          set((state) => {
-            console.log(state);
+export const useExhibitionStore = devtools(
+  persist<ExhibitionStoreType, [], [], ExhibitionPersistedState>(
+    (set) => ({
+      likeList: [],
+      handleLike: (exhibition) =>
+        set((state) => {
+          console.log(state);
 
-            const isLiked = state.likeList.some(
-              (item) => item.contentid === exhibition.contentid
-            );
-            const isLiked2 = state.likeList2.some(
-              (item) => item.contentid === exhibition.contentid
-            );
-            if (isLiked || isLiked2) {
-              return {
-                likeList: state.likeList.filter(
-                  (item) => item.contentid !== exhibition.contentid
-                ),
-                likeList2: state.likeList2.filter(
-                  (item) => item.contentid !== exhibition.contentid
-                ),
-              };
-            } else {
-              return {
-                likeList: [...state.likeList, exhibition],
-                likeList2: [...state.likeList, exhibition],
-              };
-            }
-          }),
-      }),
-      {
-        name: "exhibitionLikeList",
-        partialize: (state) => ({ likeList: state.likeList }),
-      }
-    )
+          const isLiked = state.likeList.some(
+            (item) => item.contentid === exhibition.contentid
+          );
+          if (isLiked) {
+            return {
+              likeList: state.likeList.filter(
+                (item) => item.contentid !== exhibition.contentid
+              ),
+            };
+          } else {
+            return {
+              likeList: [...state.likeList, exhibition],
+            };
+          }
+        }),
+    }),
+    {
+      name: "exhibitionLikeList",
+      partialize: (state) => ({ likeList: state.likeList }),
+    }
   )
 );
+// export const useExhibitionStore = create(
+//   devtools(
+//     persist<ExhibitionStoreType, [], [], ExhibitionPersistedState>(
+//       (set) => ({
+//         likeList: [],
+//         likeList2: [], // persist테스트용 스테이트
+//         handleLike: (exhibition) =>
+//           set((state) => {
+//             console.log(state);
+
+//             const isLiked = state.likeList.some(
+//               (item) => item.contentid === exhibition.contentid
+//             );
+//             const isLiked2 = state.likeList2.some(
+//               (item) => item.contentid === exhibition.contentid
+//             );
+//             if (isLiked || isLiked2) {
+//               return {
+//                 likeList: state.likeList.filter(
+//                   (item) => item.contentid !== exhibition.contentid
+//                 ),
+//                 likeList2: state.likeList2.filter(
+//                   (item) => item.contentid !== exhibition.contentid
+//                 ),
+//               };
+//             } else {
+//               return {
+//                 likeList: [...state.likeList, exhibition],
+//                 likeList2: [...state.likeList, exhibition],
+//               };
+//             }
+//           }),
+//       }),
+//       {
+//         name: "exhibitionLikeList",
+//         partialize: (state) => ({ likeList: state.likeList }),
+//       }
+//     )
+//   )
+// );
 
 /* 
 type Persist = <

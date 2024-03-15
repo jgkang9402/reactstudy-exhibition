@@ -1,4 +1,4 @@
-import useGetExhhibition from "@hooks/queries/useGetExhhibition";
+// import useGetExhhibition from "@hooks/queries/useGetExhhibition";
 import ExhibitionCard from "@components/common/ExhibitionCard";
 import { useState } from "react";
 import { ExhibitionType } from "@/types/exhibition.type";
@@ -8,7 +8,7 @@ import useGetInfinityExhibition from "@hooks/queries/useGetInfinityExhibition";
 // import { ExhibitionType } from "@types/exhibition.type";
 
 const ExgibitionWrapper = () => {
-  const [code, setCode] = useState(1); // 31경기도,32강원도
+  const [code] = useState(1); // 31경기도,32강원도
 
   const { targetRef } = useIntersectionObserver(handleVisibility);
   const {

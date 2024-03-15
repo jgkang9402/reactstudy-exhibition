@@ -1,11 +1,19 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   // console.log("Header");
   const navigate = useNavigate();
+  const location = useLocation();
   const goBack = () => {
     navigate(-1);
   };
+  useEffect(() => {
+    console.log("location", location);
+  }, [location]);
+  if (!location.pathname.includes("detail")) {
+    return "";
+  }
   return (
     <header className="fixed w-96 z-[1] top-0 bg-white h-16 border-b border-primary">
       <div className="px-3 h-full flex justify-between items-center">

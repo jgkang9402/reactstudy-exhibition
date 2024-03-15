@@ -1,12 +1,24 @@
 import { ExhibitionType } from "@/types/exhibition.type";
-import { useExhibitionStore } from "@store/exhibitionStore";
+// import { useExhibitionStore } from "@store/exhibitionStore";
+import { useCombinedStore } from "@store/index";
+import { useNavigate } from "react-router-dom";
 
 export interface ExhibitionCardProps {
   exhibition: ExhibitionType;
 }
 
 const ExhibitionCard = ({ exhibition }: ExhibitionCardProps) => {
-  const { likeList, handleLike } = useExhibitionStore();
+  const navigate = useNavigate();
+  const { likeList, handleLike, handleDetailExhibitionInfo } =
+    useCombinedStore();
+
+  // const { likeList, handleLike } = useExhibitionStore();
+  const goToDetail = () => {
+    console.log(exhibition);
+
+    handleDetailExhibitionInfo(exhibition);
+    navigate(`/detail/${exhibition.contentid}`);
+  };
   return (
     <li>
       <div className="flex">
@@ -26,7 +38,6 @@ const ExhibitionCard = ({ exhibition }: ExhibitionCardProps) => {
         </div>
         <div className="flex flex-col">
           <button onClick={() => handleLike(exhibition)}>
-            {/* <button onClick={() => handleLike(exhibition.contentid)}> */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -47,7 +58,9 @@ const ExhibitionCard = ({ exhibition }: ExhibitionCardProps) => {
               ></path>
             </svg>
           </button>
-          <button className="border p-3">예매하기</button>
+          <button onClick={goToDetail} className="border p-3">
+            예매하기
+          </button>
         </div>
       </div>
     </li>

@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "@components/layout/RootLayout";
 import HomePage from "@pages/home/HomePage";
 import LikePage from "@pages/like/LikePage";
+import DetailPage from "@pages/detail/DetailPage";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: "like",
         element: <LikePage />,
+      },
+      {
+        path: "detail/:id",
+        element: <DetailPage />,
       },
     ],
   },
